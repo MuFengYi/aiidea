@@ -1,0 +1,14 @@
+{
+  "short_name": "AiiDea",
+  "name": "AiiDea",
+  "description": "Track, analyze, and improve your trading performance",
+  "icons": [],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff",
+  "orientation": "portrait-primary",
+  "categories": ["finance", "productivity", "business"],
+  "lang": "en-US",
+  "scope": "/"
+}

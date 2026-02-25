@@ -1,0 +1,395 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom CSS variables for theming */
+:root {
+  --primary-color: #007AFF;
+  --primary-hover: #0056CC;
+  --secondary-color: #5AC8FA;
+  --success-color: #34C759;
+  --warning-color: #FF9500;
+  --error-color: #FF3B30;
+  --text-primary: #1D1D1F;
+  --text-secondary: #8E8E93;
+  --background: #F2F2F7;
+  --surface: #FFFFFF;
+  --border: #E5E5E7;
+}
+
+/* Global styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background);
+  color: var(--text-primary);
+}
+
+.bg-ios-bg {
+  background: var(--background);
+}
+
+.aiidea-header {
+  background: #fff;
+  border-bottom: 1px solid #e5e5e7;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.aiidea-header__title {
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.aiidea-header__actions {
+  display: flex;
+  gap: 8px;
+}
+
+.aiidea-header__icon {
+  color: #1d1d1f;
+}
+
+.aiidea-content {
+  padding: 16px 18px 90px;
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.aiidea-page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.aiidea-search input {
+  border-radius: 12px;
+  height: 40px;
+}
+
+.aiidea-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.aiidea-section-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #6b6b74;
+  margin-bottom: 6px;
+}
+
+.aiidea-section-items {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+}
+
+.aiidea-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  gap: 12px;
+  align-items: center;
+  padding: 14px 16px;
+  border-bottom: 1px solid #f0f0f2;
+}
+
+.aiidea-row:last-child {
+  border-bottom: none;
+}
+
+.aiidea-row-main {
+  cursor: pointer;
+}
+
+.aiidea-row-title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.aiidea-row-date {
+  font-size: 12px;
+  color: #8e8e93;
+  margin-top: 4px;
+}
+
+.aiidea-row-score {
+  font-weight: 600;
+  color: #111;
+  min-width: 24px;
+}
+
+.aiidea-row-ai {
+  border-radius: 10px;
+  color: #007aff;
+}
+
+.aiidea-row-delete {
+  color: #ff3b30;
+}
+
+.aiidea-bottom-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 72px;
+  background: #f7f7f8;
+  border-top: 1px solid #e5e5e7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 24px;
+}
+
+.aiidea-count {
+  font-size: 14px;
+  color: #6b6b74;
+}
+
+.aiidea-add-btn {
+  position: absolute;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+}
+
+.aiidea-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 240px;
+}
+
+.aiidea-editor {
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.aiidea-editor-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.aiidea-editor-textarea {
+  border-radius: 12px;
+  font-size: 16px;
+  padding: 12px;
+}
+
+.aiidea-editor-meta {
+  font-size: 12px;
+  color: #8e8e93;
+}
+
+.aiidea-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.aiidea-modal-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 20px;
+  max-width: 520px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.aiidea-modal-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.aiidea-modal-score {
+  font-size: 14px;
+  color: #007aff;
+}
+
+.aiidea-modal-content {
+  font-size: 14px;
+  color: #1d1d1f;
+  white-space: pre-wrap;
+  max-height: 260px;
+  overflow: auto;
+}
+
+.aiidea-setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid #f0f0f2;
+}
+
+.aiidea-setting-row:last-child {
+  border-bottom: none;
+}
+
+.aiidea-setting-value {
+  color: #8e8e93;
+}
+
+.aiidea-link {
+  color: #007aff;
+}
+
+.aiidea-login-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 32px;
+  width: 100%;
+  max-width: 360px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  text-align: center;
+}
+
+.aiidea-login-header h1 {
+  font-size: 28px;
+  margin-bottom: 4px;
+}
+
+.aiidea-login-header p {
+  color: #8e8e93;
+  font-size: 14px;
+}
+
+.aiidea-logo {
+  width: 64px;
+  height: 64px;
+  background: #111;
+  border-radius: 18px;
+  margin: 0 auto 16px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.aiidea-apple-btn {
+  height: 46px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+.aiidea-login-footer {
+  color: #8e8e93;
+  font-size: 12px;
+}
+
+/* Custom components */
+.card {
+  @apply bg-white rounded-xl shadow-sm border border-gray-100 p-6 transition-all duration-200 hover:shadow-md;
+}
+
+.btn-primary {
+  @apply bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.btn-secondary {
+  @apply bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-lg transition-colors duration-200;
+}
+
+.input-field {
+  @apply w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+}
+
+/* Chart styles */
+.recharts-wrapper {
+  @apply rounded-lg overflow-hidden;
+}
+
+.recharts-tooltip-wrapper {
+  @apply rounded-lg shadow-lg;
+}
+
+/* Loading spinner */
+.loading-spinner {
+  @apply animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .card {
+    @apply p-4;
+  }
+}
+
+/* Animation utilities */
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-up {
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
+}

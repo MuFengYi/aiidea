@@ -1,0 +1,4 @@
+# Placeholder for favicon.ico
+# Please replace this file with a proper 16x16, 32x32, or 64x64 pixel ICO file
+# You can generate one from: https://favicon.io/ or similar services
+# Use a stock chart or trading-related icon for your Stock Trading Analysis app

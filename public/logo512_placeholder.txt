@@ -1,0 +1,4 @@
+# Placeholder for logo512.png
+# Please replace this file with a proper 512x512 pixel PNG file
+# This icon will be used for your PWA on various platforms
+# Recommended: Use a stock chart, trading graph, or financial symbol
