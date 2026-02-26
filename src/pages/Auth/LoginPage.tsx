@@ -5,12 +5,26 @@ import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 import { useAuthStore } from '../../stores/authStore';
-import { initializeAppleSignIn } from '../../utils/oauthUtils';
+import { initializeAppleSignIn, initializeGoogleSignIn } from '../../utils/oauthUtils';
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
   const { setTokens, setUser } = useAuthStore();
   const [loading, setLoading] = useState(false);
+
+  const handleGoogleLogin = async () => {
+    try {
+      const result = await initializeGoogleSignIn();
+      if (result) {
+        // Handle successful Google login
+        setTokens(result.tokens.accessToken, result.tokens.refreshToken);
+        setUser(result.user);
+        navigate('/');
+      }
+    } catch (error) {
+      toast.error('Google login failed');
+    }
+  };
 
   const handleAppleLogin = async () => {
     try {
@@ -37,6 +51,14 @@ const LoginPage: React.FC = () => {
           <p>记录灵感，交给 AI 打分</p>
         </div>
 
+        <Button
+          type="primary"
+          size="large"
+          className="aiidea-google-btn"
+          onClick={handleGoogleLogin}
+        >
+          使用 Google 登录
+        </Button>
         <Button
           type="primary"
           size="large"
