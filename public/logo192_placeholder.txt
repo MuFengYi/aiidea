@@ -1,4 +1,4 @@
 # Placeholder for logo192.png
 # Please replace this file with a proper 192x192 pixel PNG file
 # This icon will be used for your PWA on mobile devices
-# Recommended: Use a stock chart, trading graph, or financial symbol
+# Recommended: Use an AiiDea app icon (idea/lightbulb/brain symbol)

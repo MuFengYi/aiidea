@@ -1,6 +1,9 @@
 // OAuth utility functions for Google and Apple Sign In
 
-import { AuthTokens } from "../services/api";
+type AuthTokens = {
+  accessToken: string;
+  refreshToken: string;
+};
 
 declare global {
   interface Window {
@@ -126,11 +129,11 @@ export const initializeAppleSignIn = (): Promise<AuthResult | null> => {
 
 // Alternative approach using direct API calls
 export const signInWithGoogle = async (): Promise<void> => {
-  const redirectUrl = `${process.env.REACT_APP_API_URL || 'http://localhost:3001'}/api/v1/auth/google`;
+  const redirectUrl = `${process.env.REACT_APP_API_URL || 'http://localhost:3002'}/api/v1/auth/google`;
   window.location.href = redirectUrl;
 };
 
 export const signInWithApple = async (): Promise<void> => {
-  const redirectUrl = `${process.env.REACT_APP_API_URL || 'http://localhost:3001'}/api/v1/auth/apple`;
+  const redirectUrl = `${process.env.REACT_APP_API_URL || 'http://localhost:3002'}/api/v1/auth/apple`;
   window.location.href = redirectUrl;
 };

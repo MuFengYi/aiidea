@@ -40,7 +40,7 @@ interface RegisterData {
 }
 
 // Configure axios defaults
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api/v1';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3002/api/v1';
 axios.defaults.baseURL = API_BASE_URL;
 
 export const useAuthStore = create<AuthState>()(
