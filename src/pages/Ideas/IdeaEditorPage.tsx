@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Button, Input, Spin } from 'antd';
+import { Button, Checkbox, Input, Spin } from 'antd';
 
 import { ideaService, Idea } from '../../services/ideaService';
 
@@ -13,12 +13,14 @@ const IdeaEditorPage: React.FC = () => {
 
   const [idea, setIdea] = useState<Idea | null>(null);
   const [content, setContent] = useState('');
+  const [isPublic, setIsPublic] = useState(false);
   const [loading, setLoading] = useState(!isNew);
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     if (isNew) {
       setContent('');
+      setIsPublic(false);
       return;
     }
 
@@ -28,6 +30,7 @@ const IdeaEditorPage: React.FC = () => {
         const data = await ideaService.get(id as string);
         setIdea(data);
         setContent(data?.content || '');
+        setIsPublic(!!data?.isPublic);
       } finally {
         setLoading(false);
       }
@@ -44,9 +47,9 @@ const IdeaEditorPage: React.FC = () => {
     setSaving(true);
     try {
       if (isNew) {
-        await ideaService.create(content.trim());
+        await ideaService.create(content.trim(), isPublic);
       } else if (id) {
-        await ideaService.update(id, content.trim());
+        await ideaService.update(id, content.trim(), isPublic);
       }
       navigate('/');
     } finally {
@@ -80,6 +83,10 @@ const IdeaEditorPage: React.FC = () => {
         autoSize={{ minRows: 10 }}
         className="aiidea-editor-textarea"
       />
+
+      <Checkbox checked={isPublic} onChange={(event) => setIsPublic(event.target.checked)}>
+        公开给网友看到
+      </Checkbox>
 
       {!isNew && idea && (
         <div className="aiidea-editor-meta">

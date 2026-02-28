@@ -6,6 +6,12 @@ export interface Idea {
   content: string;
   detail?: string | null;
   score?: string | null;
+  isPublic: boolean;
+  user?: {
+    id: string;
+    firstName?: string | null;
+    lastName?: string | null;
+  };
   createdAt: string;
   updatedAt: string;
 }
@@ -22,18 +28,23 @@ export const ideaService = {
     return response.data?.ideas || [];
   },
 
+  async listPublic(): Promise<Idea[]> {
+    const response = await axios.get('/ideas/public/list');
+    return response.data?.ideas || [];
+  },
+
   async get(id: string): Promise<Idea> {
     const response = await axios.get(`/ideas/${id}`);
     return response.data?.idea;
   },
 
-  async create(content: string): Promise<Idea> {
-    const response = await axios.post('/ideas', { content });
+  async create(content: string, isPublic: boolean): Promise<Idea> {
+    const response = await axios.post('/ideas', { content, isPublic });
     return response.data?.idea;
   },
 
-  async update(id: string, content: string): Promise<Idea> {
-    const response = await axios.put(`/ideas/${id}`, { content });
+  async update(id: string, content: string, isPublic: boolean): Promise<Idea> {
+    const response = await axios.put(`/ideas/${id}`, { content, isPublic });
     return response.data?.idea;
   },
 

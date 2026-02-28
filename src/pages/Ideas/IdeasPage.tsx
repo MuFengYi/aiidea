@@ -57,6 +57,8 @@ const groupIdeas = (ideas: Idea[]): IdeaGroup[] => {
 const IdeasPage: React.FC = () => {
   const navigate = useNavigate();
   const [ideas, setIdeas] = useState<Idea[]>([]);
+  const [publicIdeas, setPublicIdeas] = useState<Idea[]>([]);
+  const [activeTab, setActiveTab] = useState<'mine' | 'public'>('mine');
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [selectedIdea, setSelectedIdea] = useState<Idea | null>(null);
@@ -65,8 +67,12 @@ const IdeasPage: React.FC = () => {
   const loadIdeas = async () => {
     setLoading(true);
     try {
-      const list = await ideaService.list();
-      setIdeas(list);
+      const [myList, publicList] = await Promise.all([
+        ideaService.list(),
+        ideaService.listPublic()
+      ]);
+      setIdeas(myList);
+      setPublicIdeas(publicList);
     } finally {
       setLoading(false);
     }
@@ -76,10 +82,12 @@ const IdeasPage: React.FC = () => {
     loadIdeas();
   }, []);
 
+  const currentIdeas = activeTab === 'mine' ? ideas : publicIdeas;
+
   const filteredIdeas = useMemo(() => {
-    if (!search.trim()) return ideas;
-    return ideas.filter((idea) => idea.content.toLowerCase().includes(search.toLowerCase()));
-  }, [ideas, search]);
+    if (!search.trim()) return currentIdeas;
+    return currentIdeas.filter((idea) => idea.content.toLowerCase().includes(search.toLowerCase()));
+  }, [currentIdeas, search]);
 
   const groups = useMemo(() => groupIdeas(filteredIdeas), [filteredIdeas]);
 
@@ -113,6 +121,20 @@ const IdeasPage: React.FC = () => {
           onChange={(event) => setSearch(event.target.value)}
         />
       </div>
+      <div className="aiidea-tabs">
+        <button
+          className={`aiidea-tab ${activeTab === 'mine' ? 'aiidea-tab-active' : ''}`}
+          onClick={() => setActiveTab('mine')}
+        >
+          我的 idea
+        </button>
+        <button
+          className={`aiidea-tab ${activeTab === 'public' ? 'aiidea-tab-active' : ''}`}
+          onClick={() => setActiveTab('public')}
+        >
+          网友 idea
+        </button>
+      </div>
 
       {loading ? (
         <div className="aiidea-loading">
@@ -128,33 +150,48 @@ const IdeasPage: React.FC = () => {
                   <div key={idea.id} className="aiidea-row">
                     <div
                       className="aiidea-row-main"
-                      onClick={() => navigate(`/idea/${idea.id}`)}
+                      onClick={() => {
+                        if (activeTab === 'mine') {
+                          navigate(`/idea/${idea.id}`);
+                        }
+                      }}
                     >
                       <div className="aiidea-row-title">{idea.content}</div>
                       <div className="aiidea-row-date">{formatIdeaDate(idea.createdAt)}</div>
+                      {activeTab === 'public' && (
+                        <div className="aiidea-row-author">
+                          by {idea.user?.firstName || ''} {idea.user?.lastName || ''}
+                        </div>
+                      )}
                     </div>
                     <div className="aiidea-row-score">{idea.score || ''}</div>
-                    <Button
-                      type="text"
-                      className="aiidea-row-ai"
-                      loading={aiLoadingId === idea.id}
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        handleAskAi(idea);
-                      }}
-                    >
-                      AI
-                    </Button>
-                    <Button
-                      type="text"
-                      className="aiidea-row-delete"
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        handleDelete(idea.id);
-                      }}
-                    >
-                      删除
-                    </Button>
+                    {activeTab === 'mine' ? (
+                      <>
+                        <Button
+                          type="text"
+                          className="aiidea-row-ai"
+                          loading={aiLoadingId === idea.id}
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            handleAskAi(idea);
+                          }}
+                        >
+                          AI
+                        </Button>
+                        <Button
+                          type="text"
+                          className="aiidea-row-delete"
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            handleDelete(idea.id);
+                          }}
+                        >
+                          删除
+                        </Button>
+                      </>
+                    ) : (
+                      <div />
+                    )}
                   </div>
                 ))}
               </div>
@@ -164,7 +201,7 @@ const IdeasPage: React.FC = () => {
       )}
 
       <div className="aiidea-bottom-bar">
-        <div className="aiidea-count">{ideas.length} ideas</div>
+        <div className="aiidea-count">{currentIdeas.length} ideas</div>
         <Button
           type="primary"
           shape="circle"
